@@ -1,27 +1,43 @@
 <template>
     <header id="navbar" class="w-full hidden lg:flex flex-col">
       <nav class="w-full flex justify-between border-bot">
-        <github-corner url="https://github.com/alexdeploy/developer-portfolio-v2" />
+<!--        <github-corner url="https://github.com/alexdeploy/developer-portfolio-v2" />-->
           <div class="flex">
-            <NuxtLink id="nav-logo" to="/">
-              {{ config.dev.logo_name }}
-            </NuxtLink>
+<!--            <NuxtLink id="nav-logo" to="/">-->
+<!--              {{ config.logo_name }}-->
+<!--            </NuxtLink>-->
 
             <NuxtLink id="nav-link" to="/" :class="{ active: isActive('/') }">
-              _hello
+              О нас
             </NuxtLink>
   
             <NuxtLink id="nav-link" to="/about-me" :class="{ active: isActive('/about-me') }">
-              _about-me
+                Наша Команда
             </NuxtLink>
   
             <NuxtLink id="nav-link" to="/projects" :class="{ active: isActive('/projects') }">
-              _projects
+              Проекты
             </NuxtLink>
+
+              <NuxtLink id="nav-link" to="/projects" :class="{ active: isActive('/projects') }">
+                  Вакансии
+              </NuxtLink>
+
+              <NuxtLink id="nav-link" to="/projects" :class="{ active: isActive('/projects') }">
+                  Новости
+              </NuxtLink>
+
+              <NuxtLink id="nav-link" to="/projects" :class="{ active: isActive('/projects') }">
+                  Услуги
+              </NuxtLink>
+
+              <NuxtLink id="nav-link" to="/projects" :class="{ active: isActive('/projects') }">
+                  Заказчики
+              </NuxtLink>
           </div>
 
           <NuxtLink id="nav-link-contact" to="/contact-me" :class="{ active: isActive('/contact-me')}">
-            _contact-me
+              Контакты
           </NuxtLink>
       
       </nav>
@@ -44,8 +60,8 @@ export default {
     }
   },
   setup() {
-    const config = useRuntimeConfig()
-
+    // const config = useRuntimeConfig()
+      const config = useNuxtApp().$devConfig;
     return {
       config
     }

@@ -6,41 +6,50 @@
     	<div class="css-blurry-gradient-green"></div>
 
 		<section class="hero">
-		
+
 			<div class="head">
-				<span>
-					Hi all, I am
+				<h1>ЭВОК</h1>
+                <div class="mb-4">
+                    <span>
+					Инженерные коммуникации
 				</span>
-				<h1>{{ config.dev.name }}</h1>
+                </div>
+
+
+<!--				<h1>{{ config.name }}</h1>-->
         <span class="diple flex">
           >&nbsp;
-				<h2 class="line-1 anim-typewriter max-w-fit"> {{ config.dev.role }} </h2>
+<!--				<h2 class="line-1 anim-typewriter max-w-fit"> {{ config.role }} </h2>-->
+          <h2 :key="currentText" class="line-1 anim-typewriter max-w-fit">{{ currentText }}</h2>
         </span>
 			</div>
 
 			<div id="info">
-				<span class="action">
-					// complete the game to continue
+				<span class="action text-2xl font-700">
+					//  ЛЕЙТМАН
+				</span>
+                <span class="action">
+					// Алексей, Дмитрий & Игорь
 				</span>
 				<span :class="{hide: isMobile}">
-					// you can also see it on my Github page
+<!--					// you can also see it on my Github page-->
 				</span>
 				<span :class="{hide: !isMobile}">
 					// find my profile on Github:
 				</span>
 				<p class="code">
-					<span class="identifier">
-						const
-					</span>
-					<span class="variable-name">
-						githubLink
-					</span>
-					<span class="operator">
-						=
-					</span>
-					<a class="string" :href="'https://github.com/' + config.public.dev.contacts.social.github.user">
-						"https://github.com/{{ config.public.dev.contacts.social.github.user }}"
-					</a>
+<!--					<span class="identifier">-->
+<!--						const-->
+<!--					</span>-->
+<!--					<span class="variable-name">-->
+<!--						githubLink-->
+<!--					</span>-->
+<!--					<span class="operator">-->
+<!--						=-->
+<!--					</span>-->
+<!--					<a class="string" :href="'https://github.com/' + config.contacts.social.github.user">-->
+<!--						"https://github.com/{{ config.contacts.social.github.user }}"-->
+<!--					</a>-->
 				</p>
 			</div>
 		</section>
@@ -55,19 +64,28 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-const config = useRuntimeConfig()
+// const config = useRuntimeConfig()
+const config = ref(null);
 
 const isMobile = ref(false)
 const loading = ref(false)
 
 onMounted(() => {
-  if (window.innerWidth <= 1024) isMobile.value = true
-  window.addEventListener('resize', handleResize)
-})
+    if (window.innerWidth <= 1024) isMobile.value = true;
+    window.addEventListener('resize', handleResize);
+
+    const nuxtApp = useNuxtApp();
+    // Assuming $devConfig is available
+    // config.value = nuxtApp.$devConfig;
+    // console.log(nuxtApp.$devConfig);
+
+    rotateTexts(); // Start rotating texts when component is mounted
+});
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize)
-})
+    window.removeEventListener('resize', handleResize);
+    clearInterval(textInterval); // Clear interval when component is unmounted
+});
 
 function handleResize() {
   if (window.innerWidth <= 1024) {
@@ -76,6 +94,21 @@ function handleResize() {
     isMobile.value = false
   }
 }
+
+const texts = ['Проектирование', 'Согласование', 'Авторский надзор'];
+const currentIndex = ref(0);
+const currentText = ref(texts[currentIndex.value]);
+
+let textInterval;
+
+// Function to rotate texts at specified intervals
+function rotateTexts() {
+    textInterval = setInterval(() => {
+        currentIndex.value = (currentIndex.value + 1) % texts.length;
+        currentText.value = texts[currentIndex.value];
+    }, 5000); // Change text every 5 seconds (adjust as needed)
+}
+
 </script>
 
 <style scoped>
@@ -90,7 +123,7 @@ function handleResize() {
 .hero {
 	width: 100%;
 	justify-content: center;
-	
+
 }
 .game {
 	display: flex;
@@ -264,7 +297,7 @@ function handleResize() {
 		font-size: 20px;
 		color: #43D9AD;
 	}
-	
+
 	#info .action {
 		display: none;
 	}
